@@ -1,17 +1,40 @@
 package interpreter;
-
+import java.util.HashMap;
 import java.util.ArrayList;
+import interpreter.bytecode.*;
 
 public class Program {
 
     private ArrayList<ByteCode> program;
+    private ArrayList<ByteCode> branches;
+    private HashMap<String, Integer> labels;
+    private int address;
+
 
     public Program() {
         program = new ArrayList<>();
+        branches = new ArrayList<>();
+        labels = new HashMap<>();
     }
 
     protected ByteCode getCode(int pc) {
+
         return this.program.get(pc);
+    }
+
+    public void addBytecode(ByteCode bytecode) {
+        if (bytecode instanceof LabelCode) {
+            LabelCode label = (LabelCode)bytecode;
+            labels.put(label.getLabel(), address);
+        } else {
+            if (bytecode instanceof FalseBranchCode || bytecode instanceof GotoCode || bytecode instanceof CallCode) { // resolve later
+                branches.add(bytecode);
+            }
+
+        }
+
+        program.add(bytecode);
+        address++;
     }
 
     public int getSize() {
@@ -23,10 +46,37 @@ public class Program {
      * Currently all labels look like LABEL <<num>>>, these need to be converted into
      * correct addresses so the VirtualMachine knows what to set the Program Counter(PC)
      * HINT: make note what type of data-stucture bytecodes are stored in.
-     *
-     * @param program Program object that holds a list of ByteCodes
      */
     public void resolveAddrs() {
+        for (ByteCode branch : branches) {
+            String label = "<none>";
+            try {
+                if (branch instanceof FalseBranchCode) {
+                    FalseBranchCode br = (FalseBranchCode) branch;
+                    int address = labels.get(br.getLabel());
+                    label = br.getLabel();
+                    br.setAddress(address);
+                } else if (branch instanceof GotoCode) {
+                    GotoCode br = (GotoCode) branch;
+                    int address = labels.get(br.getLabel());
+                    label = br.getLabel();
+                    br.setAddress(address);
+                } else if (branch instanceof CallCode) {
+                    CallCode br = (CallCode) branch;
+                    int address = labels.get(br.getLabel());
+                    label = br.getLabel();
+                    br.setAddress(address);
+                }
+            } catch(NullPointerException e) { // bad label
+                System.out.println("*** bad label: " + label);
+                e.printStackTrace();
+                System.exit(1);
+            }
+        }
+
+        branches.clear();
+        labels.clear();
+        address = 0;
 
     }
 
