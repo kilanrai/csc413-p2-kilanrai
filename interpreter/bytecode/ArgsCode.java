@@ -2,6 +2,9 @@ package interpreter.bytecode;
 
 import interpreter.VirtualMachine;
 
+/**
+ * 
+ */
 public class ArgsCode extends ByteCode  {
     private int n;
 
