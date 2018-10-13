@@ -35,10 +35,10 @@ public class BobCode extends ByteCode {
                 r  = i == j ? 1 : 0;
                 break;
             case "!=":
-                r  = i != j ? 1: 0;
+                r  = i != j ? 1 : 0;
                 break;
             case "<=":
-                r  = i <= j ? 1: 0;
+                r  = i <= j ? 1 : 0;
                 break;
             case ">":
                 r  = i > j ? 1 : 0;

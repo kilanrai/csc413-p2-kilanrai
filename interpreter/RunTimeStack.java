@@ -29,18 +29,14 @@ public class RunTimeStack {
             int start = framePointer.get(i);
             int end = i < framePointer.size() - 1 ? framePointer.get(i + 1) : runTimeStack.size();
             StringBuffer str = new StringBuffer("");
-
             str.append("[");
-
             if (end - start > 0) {
                 str.append(runTimeStack.get(start)); // add first element
-
                 for (int j = start + 1; j < end; j++) {
                     str.append(",");
                     str.append(runTimeStack.get(j)); // now the rest
                 }
             }
-
             str.append("]");
             dumpData.add(str);
         }
@@ -106,7 +102,6 @@ public class RunTimeStack {
         for (int i = runTimeStack.size() - 1; i >= fp; i--) {
             runTimeStack.remove(i);
         }
-
         push(top);
     }
 
@@ -118,7 +113,6 @@ public class RunTimeStack {
      */
     public int store(int offset){
         int top = pop();
-        //runTimeStack.set(getFP() + offset, top); check
         runTimeStack.set(peek() + offset, top);
         return top;
     }
@@ -129,12 +123,11 @@ public class RunTimeStack {
      * go to the offset in the current frame, copy the value and
      * push it to the top of the stack. No values should be
      * removed with load.
-     * @return
+     * @return val
      */
     public int load(int offset){
         int val = runTimeStack.get(peek() + offset); //check
         push(val);
-
         return val;
     }
 
@@ -142,7 +135,7 @@ public class RunTimeStack {
      *
      * @param val used to load liters onto the RuntimeStack. For example,
      * LIT 5 or LIT 0 will call push with val being 5 or val being 0.
-     * @return
+     * @return val
      */
     public Integer push (Integer val){
         push(val.intValue());

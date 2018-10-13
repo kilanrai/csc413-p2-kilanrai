@@ -1,4 +1,18 @@
 package interpreter.bytecode;
+import interpreter.VirtualMachine;
+public class StoreCode extends ByteCode {
+    private int k;
 
-public class StoreCode {
+    public void init(String[] args) {
+        k = Integer.parseInt(args[1]);
+    }
+    public void execute(VirtualMachine vm) {
+        vm.store(k);
+    }
+    public boolean isLabel() {
+        return false;
+    }
+    public boolean isBranch() {
+        return false;
+    }
 }

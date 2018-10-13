@@ -9,9 +9,9 @@ public class VirtualMachine {
     private RunTimeStack runStack;
     private Stack returnAddrs;
     private Program program;
-    private int pc;
+    private int pc; // the program counter (current bytecote being executed)
     private boolean isRunning;
-     boolean dumpStack;
+    private boolean dumpStack;
 
     protected VirtualMachine(Program program) {
         this.program = program;
@@ -39,15 +39,48 @@ public class VirtualMachine {
         }
     }
 
-    public void push(int value) { runStack.push(value); }
-    public int pop() { return runStack.pop(); }
-    public int peek() { return runStack.peek(); }
-    public void store(int offset) { runStack.store(offset); }
-    public void load(int offset) { runStack.load(offset); }
-    public void initStackFrame(int nArgs) { runStack.newFrameAt(nArgs); }
+    public void push(int value) {
+        runStack.push(value);
+    }
+    public int pop() {
+        return runStack.pop(); }
+    public int peek() {
+        return runStack.peek();
+    }
+    public void store(int offset) {
+        runStack.store(offset);
+    }
+    public void load(int offset) {
+        runStack.load(offset);
+    }
+    public void initStackFrame(int nArgs) {
+        runStack.newFrameAt(nArgs);
+    }
     public void jump(int newPC) { pc = newPC; }
     public void call(int address) {
         returnAddrs.push(pc);
         pc = address;
     }
+    /**
+     * Kills the virtual machine. It will no longer be able to execute instructions.
+     */
+    public void kill() {
+        isRunning = false;
+    }
+    /**
+     * Function return, cleans up the current function's stack frame and pushes the
+     * return value onto the stack. Control is restored to the caller.
+     */
+    public void ret() {
+        runStack.popFrame();
+       // pc = returnAddrs.pop();
+    }
+    /**
+     * For DUMP instruction. This function will dump the stack after executing every instruction if true.
+     * @param newDumpStack whether or not to dump the stack
+     */
+    public void setDumpStack(boolean newDumpStack) {
+        dumpStack = newDumpStack;
+    }
+
 }

@@ -1,4 +1,16 @@
 package interpreter.bytecode;
-
-public class WriteCode {
+import interpreter.VirtualMachine;
+public class WriteCode extends ByteCode{
+    public void init(String[] args) {
+    }
+    public void execute(VirtualMachine vm) {
+        System.out.println(vm.peek());
+    }
+    public boolean isLabel()
+    {
+        return false;
+    }
+    public boolean isBranch() {
+        return false;
+    }
 }

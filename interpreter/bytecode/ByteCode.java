@@ -18,6 +18,6 @@ abstract public class ByteCode {
     }
 
     abstract public void init(String[] args);
-    abstract public void execute(VirtualMachine vm);//just for commit
+    abstract public void execute(VirtualMachine vm);
 
 }
