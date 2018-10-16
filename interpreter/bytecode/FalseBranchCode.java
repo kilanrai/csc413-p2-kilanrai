@@ -1,9 +1,9 @@
 package interpreter.bytecode;
 import interpreter.VirtualMachine;
+
 public class FalseBranchCode extends ByteCode {
     private String label;
     private int address;
-
     public void init(String[] args) {
         label = args[1];
     }
@@ -23,3 +23,4 @@ public class FalseBranchCode extends ByteCode {
         this.address = newAddress;
     }
 }
+

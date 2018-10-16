@@ -1,9 +1,9 @@
 package interpreter.bytecode;
 import interpreter.VirtualMachine;
 import java.util.*;
+
 public class ReadCode extends ByteCode {
     private static Scanner scanner = new Scanner(System.in);
-
     public void init(String[] args) {
     }
     public void execute(VirtualMachine vm) {
@@ -12,7 +12,7 @@ public class ReadCode extends ByteCode {
     public boolean isLabel() {
         return false;
     }
-    public boolean isBranch() {
+    public boolean isJumpCode() {
         return false;
     }
 }

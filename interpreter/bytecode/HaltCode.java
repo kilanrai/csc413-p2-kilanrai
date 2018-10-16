@@ -10,9 +10,10 @@ public class HaltCode extends ByteCode {
     public boolean isLabel() {
         return false;
     }
-    public boolean isBranch() {
+    public boolean isJumpCode() {
             return false;
         }
 
 
 }
+

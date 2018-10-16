@@ -3,7 +3,6 @@ import interpreter.VirtualMachine;
 
 public class LitCode extends ByteCode{
     private int n;
-
     public void init(String[] args) {
         n = Integer.parseInt(args[1]);
     }
@@ -13,7 +12,7 @@ public class LitCode extends ByteCode{
     public boolean isLabel() {
         return false;
     }
-    public boolean isBranch() {
+    public boolean isJumpCode() {
         return false;
     }
 }

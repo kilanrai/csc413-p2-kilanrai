@@ -1,3 +1,4 @@
+DUMP on
 GOTO start<<1>>
 LABEL Read
 READ

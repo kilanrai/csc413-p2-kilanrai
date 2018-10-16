@@ -1,9 +1,8 @@
 package interpreter.bytecode;
 import interpreter.VirtualMachine;
 
-public class BobCode extends ByteCode {
+public class BopCode extends ByteCode {
     private String op;
-
     public void init(String[] args) {
         try {
             op = args[1];
@@ -12,7 +11,6 @@ public class BobCode extends ByteCode {
             System.exit(1);
         }
     }
-
     public void execute(VirtualMachine vm) {
         int j = vm.pop();
         int i = vm.pop();

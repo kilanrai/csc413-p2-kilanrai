@@ -1,42 +1,41 @@
+
 package interpreter;
 import java.util.HashMap;
 import java.util.ArrayList;
 import interpreter.bytecode.*;
 
+/**
+ * This Program Class will be responsible for storing all the bytecodes read from the source file.
+ * This will store in an ArrayList which has a designated type of ByteCode. This will ensure only
+ * ByteCodes and its subclass can only be added to the ArrayList. This class holds all instructions
+ * and resolve the label addresses.
+ */
 public class Program {
-
     private ArrayList<ByteCode> program;
     private ArrayList<ByteCode> branches;
     private HashMap<String, Integer> labels;
     private int address;
-
 
     public Program() {
         program = new ArrayList<>();
         branches = new ArrayList<>();
         labels = new HashMap<>();
     }
-
     protected ByteCode getCode(int pc) {
-
         return this.program.get(pc);
     }
-
     public void addBytecode(ByteCode bytecode) {
         if (bytecode instanceof LabelCode) {
             LabelCode label = (LabelCode)bytecode;
             labels.put(label.getLabel(), address);
         } else {
-            if (bytecode instanceof FalseBranchCode || bytecode instanceof GotoCode || bytecode instanceof CallCode) { // resolve later
+            if (bytecode instanceof FalseBranchCode || bytecode instanceof GotoCode || bytecode instanceof CallCode) {
                 branches.add(bytecode);
             }
-
         }
-
         program.add(bytecode);
         address++;
     }
-
     public int getSize() {
         return this.program.size();
     }
@@ -73,14 +72,8 @@ public class Program {
                 System.exit(1);
             }
         }
-
         branches.clear();
         labels.clear();
         address = 0;
     }
 }
-
-
-
-
-

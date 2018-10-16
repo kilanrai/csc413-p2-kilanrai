@@ -1,13 +1,17 @@
 package interpreter;
-
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * RunTimeStack Class is used by the virtual machine and holds the machine's stack and frame pointers.
+ * This Class records and processes the stack of active frames. This class will contain two data structures
+ * used to help the VirtualMachine execute the program. It is very important that we do not return any of
+ * these data structures, which means there should not be NO getters and setters for these data structures.
+ * These data structures must remain private as well.
+ */
 public class RunTimeStack {
-
-    private ArrayList<Integer> runTimeStack; // we modified with <Integer>
+    private ArrayList<Integer> runTimeStack; // I modified with <Integer>
     private Stack<Integer> framePointer;
-
     public RunTimeStack() {
         runTimeStack = new ArrayList<>();
         framePointer = new Stack<>();
@@ -22,9 +26,7 @@ public class RunTimeStack {
      * to include divisions between frames. If a frame is empty, this must be shown as well.
      */
     public void dump(){
-
         ArrayList<StringBuffer> dumpData = new ArrayList<>();
-
         for (int i = 0; i < framePointer.size(); i++) {
             int start = framePointer.get(i);
             int end = i < framePointer.size() - 1 ? framePointer.get(i + 1) : runTimeStack.size();
@@ -40,16 +42,13 @@ public class RunTimeStack {
             str.append("]");
             dumpData.add(str);
         }
-
         System.out.print(dumpData.get(0)); // print first stack
-
         for (int i = 1; i < dumpData.size(); i++) {
             System.out.printf(" %s", dumpData.get(i)); // now the rest
         }
-
         System.out.println();
-
     }
+
     /**
      *
      * @return the top of the stack without removing the item.
@@ -62,7 +61,7 @@ public class RunTimeStack {
      * removes an item to the top of the RuntimeStack and
      * @return it.
      */
-    public int pop() {
+   public int pop() {
         int i = peek(); // call peek to get last item
         runTimeStack.remove(runTimeStack.size()-1);// remove the last item
         return i;
@@ -73,10 +72,10 @@ public class RunTimeStack {
      * @param i used to add an item to the top of the RuntimeStack.
      * @return item added is also returned.
      */
-    public int push(int i) {
-        runTimeStack.add(i);
+   public int push(int i) {
+       runTimeStack.add(i);
         return i;
-    }
+   }
 
     /**
      * creates a new frame in the RuntimeStack class. The
@@ -98,7 +97,6 @@ public class RunTimeStack {
     public void popFrame() {
         int fp = framePointer.pop();
         int top = peek();
-
         for (int i = runTimeStack.size() - 1; i >= fp; i--) {
             runTimeStack.remove(i);
         }
@@ -113,7 +111,7 @@ public class RunTimeStack {
      */
     public int store(int offset){
         int top = pop();
-        runTimeStack.set(peek() + offset, top);
+        runTimeStack.set(framePointer.peek() + offset, top);
         return top;
     }
 
@@ -126,7 +124,7 @@ public class RunTimeStack {
      * @return val
      */
     public int load(int offset){
-        int val = runTimeStack.get(peek() + offset); //check
+        int val = runTimeStack.get(framePointer.peek() + offset); //check
         push(val);
         return val;
     }
@@ -142,9 +140,6 @@ public class RunTimeStack {
         return val;
     }
 }
-
-
-
 
 
 
